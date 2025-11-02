@@ -1,0 +1,6 @@
+@Talabat_E_commerce.web_HostAddress = http://localhost:5259
+
+GET {{Talabat_E_commerce.web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
