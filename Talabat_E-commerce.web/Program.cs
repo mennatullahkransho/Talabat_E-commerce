@@ -8,7 +8,7 @@ namespace Talabat_E_commerce.web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +28,7 @@ namespace Talabat_E_commerce.web
 
             var Scoope = app.Services.CreateScope();
             var ObjectOfDataSeeding = Scoope.ServiceProvider.GetRequiredService<IDataSeeding>();
-            ObjectOfDataSeeding.DataSeed();
+            await ObjectOfDataSeeding.DataSeedAsync();
 
 
 

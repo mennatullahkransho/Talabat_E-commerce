@@ -8,6 +8,6 @@ namespace DomainLayer.Interfaces
 {
     public interface IDataSeeding
     {
-        public void DataSeed();
+         Task DataSeedAsync();
     }
 }
