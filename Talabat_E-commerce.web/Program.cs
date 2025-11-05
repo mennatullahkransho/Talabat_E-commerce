@@ -48,6 +48,7 @@ namespace Talabat_E_commerce.web
             }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 
