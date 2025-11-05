@@ -30,7 +30,7 @@ namespace Talabat_E_commerce.web
             builder.Services.AddScoped<IDataSeeding, DataSeeding>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddAutoMapper(cfg => cfg.AddMaps(typeof(AssemblyReferenceService).Assembly));
-
+            builder.Services.AddScoped<IServiceManager, ServiceManager>();
             var app = builder.Build();
 
             var Scoope = app.Services.CreateScope();
