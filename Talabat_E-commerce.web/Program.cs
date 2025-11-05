@@ -1,8 +1,14 @@
 
 using DomainLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using AutoMapper;
 using Persistance;
 using Persistance.Data;
+using Persistance.Repositories;
+using Service;
+using ServiceAbstraction;
+using System.Reflection;
 
 namespace Talabat_E_commerce.web
 {
@@ -22,7 +28,8 @@ namespace Talabat_E_commerce.web
             {   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
             builder.Services.AddScoped<IDataSeeding, DataSeeding>();
-
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddAutoMapper(cfg => cfg.AddMaps(typeof(AssemblyReferenceService).Assembly));
 
             var app = builder.Build();
 
