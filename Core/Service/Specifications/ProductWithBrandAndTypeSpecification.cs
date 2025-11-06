@@ -35,6 +35,7 @@ namespace Service.Specifications
                 default:
                     break;
             }
+            ApplyPagination(queryParams.PageSize, queryParams.PageIndex);
 
         }
 
