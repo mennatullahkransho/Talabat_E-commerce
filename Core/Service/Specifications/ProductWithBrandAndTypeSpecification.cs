@@ -10,13 +10,15 @@ namespace Service.Specifications
 {
     internal class ProductWithBrandAndTypeSpecification : BaseSpecification<Product,int>
     {
-        public ProductWithBrandAndTypeSpecification(int? BrandId, int? TypeId, ProductsSortingOptions sortingOption)
-            :base(p=>(!BrandId.HasValue|| p.BrandId==BrandId)&&(!TypeId.HasValue||p.TypeId==TypeId))
+        public ProductWithBrandAndTypeSpecification(ProductQueryParams queryParams)
+            :base(p=>(!queryParams.BrandId.HasValue || p.BrandId== queryParams.BrandId)
+            &&(!queryParams.TypeId.HasValue||p.TypeId== queryParams.TypeId)
+            &&(string.IsNullOrEmpty(queryParams.SearchValue)||p.Name.ToLower().Contains(queryParams.SearchValue.ToLower())))
         {
             AddInclude(p => p.ProductBrand);
             AddInclude(p => p.ProductType);
 
-            switch(sortingOption)
+            switch(queryParams.sortingOption)
             {
                 case ProductsSortingOptions.NameAsc:
                     AddOrderBy(p => p.Name);
@@ -33,6 +35,7 @@ namespace Service.Specifications
                 default:
                     break;
             }
+
         }
 
         public ProductWithBrandAndTypeSpecification(int id):base(p=>p.Id==id)
