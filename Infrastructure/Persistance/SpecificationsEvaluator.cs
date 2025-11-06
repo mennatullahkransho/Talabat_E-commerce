@@ -18,7 +18,15 @@ namespace Persistance
             {
                 Query = Query.Where(specification.Crirteria);
             }
-            if(specification.IncludeExpressions != null && specification.IncludeExpressions.Count > 0)
+            if(specification.OrderBy != null)
+            {
+                Query = Query.OrderBy(specification.OrderBy);
+            }
+            if(specification.OrderByDescending != null)
+            {
+                Query = Query.OrderByDescending(specification.OrderByDescending);
+            }
+            if (specification.IncludeExpressions != null && specification.IncludeExpressions.Count > 0)
             {
                 Query = specification.IncludeExpressions.Aggregate(Query, (currentQuery, includeExpression) => currentQuery.Include(includeExpression));
             }

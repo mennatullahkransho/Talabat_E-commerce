@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Service.Specifications;
+using Shared;
 
 namespace Service
 {
@@ -29,9 +30,9 @@ namespace Service
 
         }
 
-        public async Task<IEnumerable<ProductDto>> GetProductsAsync()
+        public async Task<IEnumerable<ProductDto>> GetProductsAsync(int? BrandId, int? TypeId, ProductsSortingOptions sortingOption)
         {
-            var specification = new ProductWithBrandAndTypeSpecification();
+            var specification = new ProductWithBrandAndTypeSpecification(BrandId,TypeId ,sortingOption);
             var Products = await unitOfWork.GetRepository<Product, int>().GetAllAsync(specification);
             var ProductsDto = mapper.Map<IEnumerable<Product>, IEnumerable<ProductDto>>(Products);
             return ProductsDto;
