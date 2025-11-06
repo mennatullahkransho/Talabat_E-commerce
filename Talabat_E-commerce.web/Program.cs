@@ -1,12 +1,13 @@
 
+using AutoMapper;
 using DomainLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using AutoMapper;
 using Persistance;
 using Persistance.Data;
 using Persistance.Repositories;
 using Service;
+using Service.MappingProfile;
 using ServiceAbstraction;
 using System.Reflection;
 
@@ -30,6 +31,7 @@ namespace Talabat_E_commerce.web
             builder.Services.AddScoped<IDataSeeding, DataSeeding>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddAutoMapper(cfg => cfg.AddMaps(typeof(AssemblyReferenceService).Assembly));
+            builder.Services.AddTransient<PictureURLResolver>();
             builder.Services.AddScoped<IServiceManager, ServiceManager>();
             var app = builder.Build();
 

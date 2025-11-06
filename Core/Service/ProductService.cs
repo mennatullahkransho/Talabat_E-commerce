@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Service.Specifications;
 
 namespace Service
 {
@@ -22,14 +23,16 @@ namespace Service
 
         public async Task<ProductDto> GetProductByIdAsync(int Id)
         {
-            var Product = await unitOfWork.GetRepository<Product, int>().GetByIdAsync(Id);
+            var specification = new ProductWithBrandAndTypeSpecification(Id);
+            var Product = await unitOfWork.GetRepository<Product, int>().GetByIdAsync(specification);
             return mapper.Map<Product, ProductDto>(Product);
 
         }
 
         public async Task<IEnumerable<ProductDto>> GetProductsAsync()
         {
-            var Products = await unitOfWork.GetRepository<Product, int>().GetAllAsync();
+            var specification = new ProductWithBrandAndTypeSpecification();
+            var Products = await unitOfWork.GetRepository<Product, int>().GetAllAsync(specification);
             var ProductsDto = mapper.Map<IEnumerable<Product>, IEnumerable<ProductDto>>(Products);
             return ProductsDto;
         }
