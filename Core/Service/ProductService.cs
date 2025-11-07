@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Service.Specifications;
 using Shared;
+using DomainLayer.Exceptions;
 
 namespace Service
 {
@@ -26,6 +27,10 @@ namespace Service
         {
             var specification = new ProductWithBrandAndTypeSpecification(Id);
             var Product = await unitOfWork.GetRepository<Product, int>().GetByIdAsync(specification);
+            if(Product==null)
+            {
+                throw new ProductNotFoundException(Id);
+            }
             return mapper.Map<Product, ProductDto>(Product);
 
         }
