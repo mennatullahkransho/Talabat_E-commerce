@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using DomainLayer.Interfaces;
-using DomainLayer.Models;
 using ServiceAbstraction;
-using Shared.DataTransferObjets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +9,8 @@ using System.Threading.Tasks;
 using Service.Specifications;
 using Shared;
 using DomainLayer.Exceptions;
+using DomainLayer.Models.ProductModule;
+using Shared.DataTransferObjets.ProductModuleDto;
 
 namespace Service
 {

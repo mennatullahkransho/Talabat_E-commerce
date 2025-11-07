@@ -7,6 +7,7 @@ using Persistance.Repositories;
 using Service;
 using Service.MappingProfile;
 using ServiceAbstraction;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,10 @@ namespace Persistance
             });
             services.AddScoped<IDataSeeding, DataSeeding>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IBasketRepository, BasketRepository>();
+            services.AddSingleton<IConnectionMultiplexer>(sp =>
+     ConnectionMultiplexer.Connect(Configuration.GetConnectionString("Redis"))
+ );
 
             return services;
         }
