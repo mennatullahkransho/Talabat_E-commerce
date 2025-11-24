@@ -9,5 +9,8 @@ namespace DomainLayer.Interfaces
     public interface IDataSeeding
     {
          Task DataSeedAsync();
+
+         Task IdentityDataSeedAsync();
+
     }
 }

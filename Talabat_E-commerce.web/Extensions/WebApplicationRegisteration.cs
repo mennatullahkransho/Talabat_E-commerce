@@ -10,6 +10,8 @@ namespace Talabat_E_commerce.web.Extensions
             var Scoope = app.Services.CreateScope();
             var ObjectOfDataSeeding = Scoope.ServiceProvider.GetRequiredService<IDataSeeding>();
             await ObjectOfDataSeeding.DataSeedAsync();
+            await ObjectOfDataSeeding.IdentityDataSeedAsync();
+
         }
         public static IApplicationBuilder UseCustomExceptionMiddleWare(this IApplicationBuilder app)
         {
