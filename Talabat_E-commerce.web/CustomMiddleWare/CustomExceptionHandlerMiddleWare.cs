@@ -1,4 +1,5 @@
-﻿using DomainLayer.Exceptions;
+﻿using Azure;
+using DomainLayer.Exceptions;
 using Shared.ErrorModels;
 
 namespace Talabat_E_commerce.web.CustomMiddleWare
@@ -32,19 +33,26 @@ namespace Talabat_E_commerce.web.CustomMiddleWare
 
         private static async Task HandleExceptionAsync(HttpContext httpContext, Exception ex)
         {
-            httpContext.Response.StatusCode = ex switch
-            {
-                NotFoundException => StatusCodes.Status404NotFound,
-                _ => StatusCodes.Status500InternalServerError
-            };
-
             var Response = new ErrorToReturn()
             {
-                StatusCode = httpContext.Response.StatusCode,
-
                 ErrorMessage = ex.Message
             };
+            
+            Response.StatusCode = ex switch
+            {
+                NotFoundException => StatusCodes.Status404NotFound,
+                UnauthorizedException => StatusCodes.Status401Unauthorized,
+                BadRequestException badRequestException => GetBadRequestErrors(badRequestException, Response),
+                _ => StatusCodes.Status500InternalServerError
+            };
+            httpContext.Response.StatusCode = Response.StatusCode;
             await httpContext.Response.WriteAsJsonAsync(Response);
+        }
+
+        private static int GetBadRequestErrors(BadRequestException badRequestException, ErrorToReturn? response)
+        {
+            response.Errors= badRequestException.Errors;
+            return StatusCodes.Status400BadRequest;
         }
 
         private static async Task HandleNotFoundEndPointAsync(HttpContext httpContext)
