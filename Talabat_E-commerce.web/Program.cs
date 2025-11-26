@@ -33,7 +33,8 @@ namespace Talabat_E_commerce.web
             builder.Services.AddInfrastructureServices(builder.Configuration);
             builder.Services.AddAplicationServices();
 
-            builder.Services.AddWebApplicationServices(); 
+            builder.Services.AddWebApplicationServices();
+            builder.Services.AddJWTServices(builder.Configuration);
             #endregion
 
             var app = builder.Build();
@@ -49,10 +50,9 @@ namespace Talabat_E_commerce.web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
-
-
             app.MapControllers();
 
 
